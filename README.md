@@ -43,6 +43,10 @@ To run locally:
 - Type the command 'node server' to start the web server
 - In a browser window navigate to 'http://localhost:3001'
 
+Deployed Application:
+
+[Heroku Application](https://salty-ocean-22261.herokuapp.com)
+
 ### Screenshot of Homepage:
 
 ![Screenshot](./assets/images/screen1.jpg)
