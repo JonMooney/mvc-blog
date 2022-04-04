@@ -1,5 +1,16 @@
-{{#each galleries as |gallery|}}
-{{> gallery-details}}
-{{/each}}
+<h1>Tech Blog Posts</h1>
 
-hello
+{{#if posts}}
+    {{posts.length}} {{format_plural "post" posts.length}}
+    
+    <ul class="blog-list">
+    {{#each posts as | post |}}
+    <li>
+        {{> post-info post }}
+    </li>
+    {{/each}}
+    </ul>
+
+{{else}}
+    <p>There are no posts yet!</p>
+{{/if}}

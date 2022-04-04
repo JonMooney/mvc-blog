@@ -2,7 +2,7 @@
   "name": "mvc-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +24,7 @@
     "express-handlebars": "^6.0.3",
     "express-session": "^1.17.2",
     "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15",
     "sequelize": "^6.17.0"
   }
 }

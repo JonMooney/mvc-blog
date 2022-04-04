@@ -1,24 +1,38 @@
 const router = require('express').Router();
-const { Gallery, Painting } = require('../models');
+const { User, Post, Comment } = require('../models');
 
-// GET all galleries for homepage
+// Get all posts - homepage
 router.get('/', async (req, res) => {
   try {
-    const dbGalleryData = await Gallery.findAll({
+    const postData = await Post.findAll({ 
+      attributes: [
+        'id',
+        'title',
+        'content',
+        'created_at'
+      ],
       include: [
         {
-          model: Painting,
-          attributes: ['filename', 'description'],
+          model: Comment,
+          attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+          // include: {
+          //   model: User,
+          //   attributes: ['username']
+          // }
         },
-      ],
+        {
+          model: User,
+          attributes: ['username']
+        }
+      ]
     });
 
-    const galleries = dbGalleryData.map((gallery) =>
-      gallery.get({ plain: true })
-    );
-    // Send over the 'loggedIn' session variable to the 'homepage' template
+    const posts = postData.map(post => post.get({ plain: true }));
+
+    console.log(posts);
+
     res.render('homepage', {
-      galleries,
+      posts,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -27,45 +41,46 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET one gallery
-router.get('/gallery/:id', async (req, res) => {
-  try {
-    const dbGalleryData = await Gallery.findByPk(req.params.id, {
-      include: [
-        {
-          model: Painting,
-          attributes: [
-            'id',
-            'title',
-            'artist',
-            'exhibition_date',
-            'filename',
-            'description',
-          ],
+// Get all posts - dashboard
+router.get('/dashboard', async (req, res) => {
+  if (req.session.loggedIn) {
+
+    try {
+      const postData = await Post.findAll({
+        where: {
+          user_id: req.session.user_id
         },
-      ],
-    });
+        attributes: [
+          'id',
+          'title',
+          'content',
+          'created_at'
+        ],
+        include: [
+          {
+            model: Comment,
+            attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+            // include: {
+            //   model: User,
+            //   attributes: ['username']
+            // }
+          },
+          {
+            model: User,
+            attributes: ['username']
+          }
+        ]
+      });
 
-    const gallery = dbGalleryData.get({ plain: true });
-    // Send over the 'loggedIn' session variable to the 'gallery' template
-    res.render('gallery', { gallery, loggedIn: req.session.loggedIn });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+      const posts = postData.map(post => post.get({ plain: true }));
 
-// GET one painting
-router.get('/painting/:id', async (req, res) => {
-  try {
-    const dbPaintingData = await Painting.findByPk(req.params.id);
-
-    const painting = dbPaintingData.get({ plain: true });
-    // Send over the 'loggedIn' session variable to the 'homepage' template
-    res.render('painting', { painting, loggedIn: req.session.loggedIn });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+      res.render('dashboard', { posts, loggedIn: req.session.loggedIn });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  } else{
+    res.redirect('/login');
   }
 });
 

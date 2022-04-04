@@ -1,0 +1,7 @@
+<a href="/api/posts/{{id}}" class="blog-title">{{title}}</a>
+<p class="blog-content">{{ content }}</p>
+<p>
+  by {{ user.username }} 
+  on {{ format_date created_at }} 
+  | {{comments.length}} {{format_plural "comment" comments.length}}
+</p>

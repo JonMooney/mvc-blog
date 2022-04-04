@@ -1,0 +1,42 @@
+<h1>Dashboard</h1>
+
+<div class="divDivider"></div>
+
+<form class="post-form">
+<h3>Create New Post</h3>
+
+<div>
+    <label for="post-title">Title:</label>
+    <input type="text" id="post-title" />
+</div>
+<div>
+    <label for="post-content">Content:</label>
+    <textarea id="post-content"></textarea>
+</div>
+<div>
+    <button type="submit">Create Post</button>
+</div>
+</form>
+
+<div class="divDivider"></div>
+
+<p>You have {{posts.length}} {{ format_plural "post" posts.length }}</p>
+
+{{#if posts}}
+    <ul class="blog-list">
+    {{#each posts as | post |}}
+    <li>
+        {{> post-info post }}
+        <p class="blog-edit"><a href="/api/posts/edit/{{id}}">Edit Post</a></p>
+    </li>
+    {{/each}}
+    </ul>
+
+{{else}}
+    <p>There are no posts yet!</p>
+{{/if}}
+
+
+
+<script src="/js/post.js"></script>
+
