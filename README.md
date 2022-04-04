@@ -40,6 +40,8 @@ To run locally:
 - Follow instructions from the installation section
 - Open a terminal window
 - Navigate to the directory you saved your project files in
+- Login to MySQL
+- Type 'source db/schema.sql' to create the database
 - Type the command 'node server' to start the web server
 - In a browser window navigate to 'http://localhost:3001'
 
