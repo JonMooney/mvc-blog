@@ -51,7 +51,7 @@ Deployed Application:
 
 ![Screenshot](./assets/images/screen1.jpg)
 
-### Screenshot of Dashboard
+### Screenshot of Dashboard:
 
 ![Screenshot](./assets/images/screen2.jpg)
 
